@@ -18,29 +18,24 @@ public class DevToStepsDefinitions {
     @Before
     public void setup() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-        System.out.println("Before");
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, 10);
     }
     @Given("I go to devto main page")
     public void i_go_to_devto_main_page() {
-        System.out.println("Given");
         driver.get("https://dev.to");
     }
     @When("I click on first blog displayed")
     public void i_click_on_first_blog_displayed() {
-        System.out.println("When");
         WebElement firstBlog = driver.findElement(By.cssSelector("h2.crayons-story__title > a"));
         firstBlogTitle = firstBlog.getText();
         firstBlog.click();
     }
     @Then("I should be redirected to blog site")
     public void i_should_be_redirected_to_blog_site() {
-        System.out.println("Then");
         wait.until(ExpectedConditions.titleContains(firstBlogTitle));
         WebElement blogTitle = driver.findElement(By.tagName("h1"));
         String blogTitleText = blogTitle.getText();
-        System.out.println("to jest tytuł mojego bloga: " + blogTitleText);
         Assert.assertEquals(firstBlogTitle, blogTitleText);
     }
     @When("I click text podcast in main page")
