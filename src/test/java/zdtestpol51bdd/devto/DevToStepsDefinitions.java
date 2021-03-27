@@ -47,7 +47,7 @@ public class DevToStepsDefinitions {
     @When("I click on first blog displayed")
     public void i_click_on_first_blog_displayed() {
         firstBlogTitle = mainPage.firstBlog.getText();
-        mainPage.selectFirstBlog();
+        singleBlogPage = mainPage.selectFirstBlog();
     }
 
     @Then("I should be redirected to blog site")
