@@ -13,6 +13,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import zdtestpol51bdd.devto.pages.MainPage;
+import zdtestpol51bdd.devto.pages.SingleBlogPage;
 
 import java.util.List;
 
@@ -23,6 +25,9 @@ public class DevToStepsDefinitions {
     String firstCastTitle;
     String searchingPhrase;
 
+    MainPage mainPage;
+    SingleBlogPage singleBlogPage;
+
     @Before
     public void setup() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
@@ -32,21 +37,20 @@ public class DevToStepsDefinitions {
 
     @Given("I go to devto main page")
     public void i_go_to_devto_main_page() {
-        driver.get("https://dev.to");
+        mainPage = new MainPage(driver);
     }
 
     @When("I click on first blog displayed")
     public void i_click_on_first_blog_displayed() {
-        WebElement firstBlog = driver.findElement(By.cssSelector("h2.crayons-story__title > a"));
-        firstBlogTitle = firstBlog.getText();
-        firstBlog.click();
+        firstBlogTitle = mainPage.firstBlog.getText();
+        mainPage.selectFirstBlog();
     }
 
     @Then("I should be redirected to blog site")
     public void i_should_be_redirected_to_blog_site() {
         wait.until(ExpectedConditions.titleContains(firstBlogTitle));
-        WebElement blogTitle = driver.findElement(By.tagName("h1"));
-        String blogTitleText = blogTitle.getText();
+        singleBlogPage = new SingleBlogPage(driver);
+        String blogTitleText = singleBlogPage.blogTitle.getText();
         Assert.assertEquals(firstBlogTitle, blogTitleText);
     }
 
